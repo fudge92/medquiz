@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedMaster Quiz Hub</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 1000px;
+      width: 100%;
+      padding: 3rem;
+      animation: slideIn 0.6s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .title {
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #666;
+      font-weight: 300;
+    }
+
+    .divider {
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin: 1.5rem auto;
+      border-radius: 2px;
+    }
+
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .quiz-card {
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 16px;
+      padding: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quiz-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .quiz-card:hover::before {
+      left: 100%;
+    }
+
+    .quiz-card:hover {
+      border-color: #667eea;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+      transform: translateY(-5px);
+    }
+
+    .quiz-card.selected {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-color: #667eea;
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    }
+
+    .quiz-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .quiz-card.selected .quiz-title {
+      color: white;
+    }
+
+    .quiz-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .quiz-card.selected .quiz-info {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .quiz-icon {
+      font-size: 1.2rem;
+    }
+
+    .button-container {
+      text-align: center;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .start-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 1rem 3rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+      opacity: 0;
+      transform: scale(0.9);
+      pointer-events: none;
+    }
+
+    .start-btn.show {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+      animation: popIn 0.4s ease-out;
+    }
+
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .start-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
+    }
+
+    .start-btn:active {
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 2rem;
+      }
+
+      .title {
+        font-size: 2rem;
+      }
+
+      .quiz-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 class="title">MedMaster Quiz Hub</h1>
+      <p class="subtitle">Master Medical Knowledge Through Interactive MCQs</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="quiz-grid" id="quizGrid">
+      <!-- Quiz cards will be generated here -->
+    </div>
+
+    <div class="button-container">
+      <button class="start-btn" id="startBtn">Start Test</button>
+    </div>
+  </div>
+
+  <script>
+    const quizzes = [
+      {
+        title: 'Peripheral Circulatory Disorders MCQ Test',
+        questions: 30,
+        link: 'peripheral_mcq.html'
+      },
+      {
+        title: 'Stasis, Embolism, and Ischemia MCQ Test',
+        questions: 43,
+        link: 'stasis_mcq.html'
+      },
+      {
+        title: 'Pathology - Circulation Disorders MCQs',
+        questions: 30,
+        link: 'pathology_mcq.html'
+      }
+    ];
+
+    let selectedQuiz = null;
+    const quizGrid = document.getElementById('quizGrid');
+    const startBtn = document.getElementById('startBtn');
+
+    // Render quiz cards
+    quizzes.forEach((quiz, index) => {
+      const card = document.createElement('div');
+      card.className = 'quiz-card';
+      card.innerHTML = `
+        <div class="quiz-title">${quiz.title}</div>
+        <div class="quiz-info">
+          <span class="quiz-icon">📋</span>
+          <span>${quiz.questions} Questions</span>
+        </div>
+      `;
+
+      card.addEventListener('click', () => {
+        // Remove selection from all cards
+        document.querySelectorAll('.quiz-card').forEach(c => c.classList.remove('selected'));
+        
+        // Add selection to clicked card
+        card.classList.add('selected');
+        selectedQuiz = quiz;
+
+        // Show start button with animation
+        startBtn.classList.add('show');
+      });
+
+      quizGrid.appendChild(card);
+    });
+
+    // Start test button
+    startBtn.addEventListener('click', () => {
+      if (selectedQuiz) {
+        window.location.href = selectedQuiz.link;
+      }
+    });
+  </script>
+</body>
+</html>
