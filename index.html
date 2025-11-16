@@ -3,22 +3,32 @@
 <head>
   <title>MedMaster Quiz Hub</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; background: #f7faff; }
-    h1 { color: #326da8; margin-top: 2rem; }
-    hr { width: 60%; border: 1px solid #b3d1ed; margin: 1rem auto 2rem auto; }
-    .block { 
-      background: #e8f1fa; color: #2d496b; 
-      border-radius: 20px; padding: 20px; margin: 10px auto; 
-      width: 300px; cursor: pointer; transition: background 0.3s ease;
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #300000;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #e0e0e0;
     }
-    .block:hover { background: #daf0fd; }
-  </style>
-</head>
-<body>
-  <h1>MedMaster Quiz Hub</h1>
-  <hr>
-  <div class="block" onclick="window.location.href='peripheral_mcq.html'">Peripheral Circulatory Disorders MCQ Test</div>
-  <div class="block" onclick="window.location.href='stasis_mcq.html'">Stasis, Embolism, and Ischemia MCQ Test</div>
-  <div class="block" onclick="window.location.href='pathology_mcq.html'">Pathology: Circulation Disorders MCQs</div>
-</body>
-</html>
+    .container {
+      background: #3c1b1b;
+      width: 90%;
+      max-width: 900px;
+      padding: 3rem 2rem;
+      border-radius: 30px;
+      box-shadow: 0 8px 30px rgba(50, 30, 30, 0.7);
+      text-align: center;
+    }
+    .title {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: #e99898;
+    }
+    .divider {
+      margin: 0 auto 3rem
